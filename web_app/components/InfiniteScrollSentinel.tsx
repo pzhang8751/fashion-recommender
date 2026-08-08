@@ -3,6 +3,8 @@ import { useRef, useEffect } from "react";
 
 export default function InfiniteScrollSentinel({onVisible}: {onVisible: ()=>void}) {
     const ref = useRef<HTMLDivElement>(null);
+    const onVisibleRef = useRef(onVisible); 
+    onVisibleRef.current = onVisible;
 
     useEffect(() => {
         const el = ref.current;
@@ -11,7 +13,7 @@ export default function InfiniteScrollSentinel({onVisible}: {onVisible: ()=>void
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
-                    onVisible();
+                    onVisibleRef.current();
                 }
             }, {rootMargin: "200px"} // determines the height at which the fetch triggers 
         )
@@ -20,5 +22,5 @@ export default function InfiniteScrollSentinel({onVisible}: {onVisible: ()=>void
         return () => observer.disconnect();
     }, [onVisible]); 
 
-    return <div ref={ref}></div>;
+    return <div ref={ref} className="h-12.5"></div>;
 }
