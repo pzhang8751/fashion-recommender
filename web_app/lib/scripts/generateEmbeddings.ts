@@ -1,4 +1,5 @@
 
+import "dotenv/config";
 import { db } from "@/lib/db/index";
 import { products, productEmbeddings } from "@/lib/db/schema";
 import { generateEmbedding } from "../embeddings/generateEmbedding";

@@ -21,7 +21,7 @@ export async function basicSearch(
     })
     .from(products)
     .innerJoin(brands, eq(products.brandId, brands.id))
-    .orderBy(desc(products.createdAt))
+    .orderBy(desc(products.createdAt)) // consider making sort by name and another id because products can be created at the same time
     .limit(limit)
     .offset(offset);
 

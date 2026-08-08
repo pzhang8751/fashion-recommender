@@ -4,7 +4,7 @@ export const brands = pgTable("brands", {
     id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull(),
     description: text("description"),
-    websiteUrl: text("website_url").notNull(),
+    websiteUrl: text("website_url").notNull().unique(),
     logoUrl: text("logo_url"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
 })
@@ -17,7 +17,7 @@ export const products = pgTable("products", {
     category: text("category"),
     price: numeric("price"),
     currency: text("currency"),
-    productUrl: text("product_url").notNull(),
+    productUrl: text("product_url").notNull().unique(),
     imageUrl: text("image_url").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
