@@ -26,12 +26,10 @@ export async function semanticSearch(
 
   const result = await db.execute<SemanticSearchRow>(sql`
     SELECT
-      p.id, p.title, p.description, p.price, p.currency,
-      p.image_url, p.product_url, b.name AS brand_name,
+      p.id, p.title, p.image_url,
       1 - (pe.text_embedding <=> ${vectorLiteral}::vector) AS similarity
     FROM product_embeddings pe
     JOIN products p ON p.id = pe.product_id
-    JOIN brands b ON b.id = p.brand_id
     ORDER BY pe.text_embedding <=> ${vectorLiteral}::vector
     LIMIT ${limit} OFFSET ${offset}
   `);
@@ -39,12 +37,7 @@ export async function semanticSearch(
   return result.map((r) => ({
     id: r.id,
     title: r.title,
-    description: r.description,
-    price: r.price !== null ? Number(r.price) : null,
-    currency: r.currency,
     imageUrl: r.image_url,
-    productUrl: r.product_url,
-    brandName: r.brand_name,
     similarity: r.similarity,
   }));
 }
