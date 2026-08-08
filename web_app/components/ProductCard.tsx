@@ -1,11 +1,10 @@
 import type { ProductSearchResult } from "@/lib/search/types";
+import Link from "next/link";
 
 export default function ProductCard({ product }: { product: ProductSearchResult }) {
   return (
-    <a
-      href={product.productUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+    <Link
+      href={`/products/${product.id}`}
       className="block break-inside-avoid mb-4 group"
     >
       <div className="overflow-hidden rounded-lg bg-gray-100">
@@ -17,7 +16,7 @@ export default function ProductCard({ product }: { product: ProductSearchResult 
           className="w-full h-auto object-cover"
         />
       </div>
-      <p className="">{product.brandName}</p>
-    </a>
+      <p>{product.title}</p>
+    </Link>
   );
 }
